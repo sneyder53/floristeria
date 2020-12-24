@@ -1,0 +1,52 @@
+@media print{
+  .doNotPrint{display:none !important;}
+}
+
+#print-section {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid black; 
+}
+
+#botton {
+	margin-top: 10px;
+}
+
+.imagen{
+	width: 150px;
+	height: 100px;
+}
+
+#imagenTarjeta {
+	outline: none;
+}
+.mensaje{
+	width: 100px;
+	height: 100px;
+}
+
+.container{
+	margin-top: 20px;
+}
+
+.card-text {
+	margin-top: 30px;
+	border-top: 30px;
+}
+
+.card-title {
+	margin-top: 30px;
+	border-top: 30px;
+}
+
+.dos{
+	text-align: center;
+	border: 1px solid black;
+	margin-top: 0px;
+	height: 100px
+}
+
+.scroll {
+	overflow: scroll;
+	 height: 550px;
+}

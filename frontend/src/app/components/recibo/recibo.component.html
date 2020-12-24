@@ -1,0 +1,38 @@
+<div class="container md-12">
+	<div class="card" *ngIf="pedido2" id="print-section">
+    	<img class="card-img-top rounded" src="../../assets/imagen/encabezadorecibo.png" alt="Card image cap">
+    	<div class="card-body">
+    		<table class="table table-bordered table-responsive-md">
+    			<tr>
+    				<td><h5 class="card-title">FECHA:</h5></td>
+    				<td><h5 class="card-title float-right">{{ fecharecibo | date:'dd/MM/yyyy' }}</h5></td>
+    			</tr>
+    			<tr>
+    				<td><h5 class="card-text">PARA:</h5></td>
+    				<td><h5 class="card-text float-right">{{ pedido2.para }}</h5></td>
+    			</tr>
+    			<tr>
+    				<td><h5 class="card-title">RECIBI DE FLORISTERIA ARTISTICA:</h5></td>
+    				<td>
+    					<form #imprimirForm="ngForm" class="doNotPrint">
+    						<input class="float-right" type="text" name="recibi" [(ngModel)]="recibi">
+    					</form>
+    					
+    					<h5 class="float-right" >{{ recibi }}</h5>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td><h5 class="card-text">DIRECCION:</h5></td>
+    				<td><h5 class="card-text float-right">{{ pedido2.direccionEntrega }}</h5></td>
+    			</tr>
+    			<tr>
+    				<td><h5 class="card-text">RECIBI:</h5></td>
+    				<td><h5 class="card-text float-right">________________________________</h5></td>
+    			</tr>
+    		</table>
+    	</div>
+ 	</div>
+ 	<div class="doNotPrint" id="botton">
+ 		<button type="button" class="btn btn-lg btn-primary" (click)="imprimir()">Imprimir</button>
+ 	</div>
+ </div>

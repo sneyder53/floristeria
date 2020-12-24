@@ -1,0 +1,13 @@
+@media print{
+  .doNotPrint{display:none !important;}
+}
+
+#print-section {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid black; 
+}
+
+#botton {
+	margin-top: 10px;
+}

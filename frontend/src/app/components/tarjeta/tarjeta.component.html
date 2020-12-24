@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col">
+		<div class="card" *ngIf="pedido2" id="print-section" [ngStyle]="{'background-image': 'url(' + url2 + ')', 'background-size': 'cover' }">
+	    	<div class="card-title dos">
+	    					<strong><h3>FLORISTERIA ARTISTICA</h3>
+				<h3>CALLE 15  No 5-37 CENTRO TELF: 5714648-5831324</h3></strong>
+	    	</div>
+	    	<div class="card-body">
+	    		<div class="card-text">
+	    			<h4>PARA: {{pedido2.para | uppercase }}</h4>
+	    		</div>
+	    		<div class="card-title">
+	    			<h1>DE: {{pedido2.de | uppercase}}</h1>
+	    		</div>
+	    		<div class="card-text tres">
+	    			<strong>{{mensaje}}</strong>
+	    		</div>
+	    		<div class="card-text float-right">
+	    			<strong>San José de Cúcuta {{ fecharecibo | date:'dd/MM/yyyy' }}</strong>
+	    		</div>
+	    	</div>
+	 	</div>
+	 	<div class="doNotPrint" id="botton">
+	 		<button type="button" class="btn btn-lg btn-primary" (click)="imprimir()">Imprimir</button>
+	 	</div>
+	</div>
+	<div class="col doNotPrint">
+		<div class="row">
+			<div class="col scroll" >
+				<ul class="list-unstyled">
+	  				<li class="media" *ngFor="let dedicatoria of dedicatorias">
+	  					<div class="media-body" data-spy="scroll">
+	      					<button class="btn btn-lg btn-success" (click)="cambiarMensaje(dedicatoria.dedicatoria)">{{dedicatoria.nombre}}</button>
+	      				</div>
+	      			</li>
+	      		</ul>
+	    	</div>
+			<div class="col scroll">
+				<div class="" *ngFor="let imagen of imagenes">
+					<button type="button" class="btn btn-light" (click)="cambiarFondo(imagen.url)"><img class="imagen" id="imagenTarjeta" src="{{url}}/uploads/tarjeta/{{imagen.url}}"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

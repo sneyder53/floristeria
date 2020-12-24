@@ -1,0 +1,108 @@
+<div class="container col">
+	<h3>{{titulo}}</h3>
+	<hr>
+	<form #pedidoForm="ngForm" class="col">
+		<div class="form-row">
+			<div class="form-group">
+    			<label for="exampleFormControlSelect1">Cliente:</label>
+    			<select class="form-control show-tick" data-live-search="true" id="exampleFormControlSelect1" id="clientecliente" #clientecliente="ngModel" name="clientecliente" [(ngModel)]="pedido.clientecliente" ngControl="name">
+      				<option *ngFor="let cliente of clientes" id="cliente.idcliente" name="cliente.idcliente" value="{{cliente.idcliente}}">
+      					{{cliente.nombre}} {{cliente.apellidos}}
+      				</option>
+    			</select>
+  			</div>
+		</div>
+		<div class="form-row">
+	    	<div class="form-group col-md-6">
+	     		<label for="Para">Para:</label>
+	      		<input type="text" class="form-control" id="para" name="para" #para="ngModel" [(ngModel)]="pedido.para" ngControl="name" placeholder="¿Para quien es el pedido?">
+	    	</div>
+	    	<div class="form-group col-md-6">
+	      		<label for="de">De: </label>
+	      		<input type="text" class="form-control" id="de" name="de" #de="ngModel" [(ngModel)]="pedido.de" ngControl="name" placeholder="¿De quien es el pedido?">
+	    	</div>
+	  	</div>
+		<div class="form-group col-md-6">
+    			<label for="exampleFormControlSelect1">Motivo:</label>
+    			<select class="form-control show-tick" data-live-search="true" id="exampleFormControlSelect1" id="motivomotivo" #motivomotivo="ngModel" name="motivomotivo" [(ngModel)]="pedido.motivomotivo" ngControl="name">
+      				<option *ngFor="let motivo of motivos" id="motivo.idmotivo" name="motivo.idmotivo" value="{{motivo.idmotivo}}">
+      					{{motivo.nombre}}
+      				</option>
+    			</select>
+  		</div>
+		
+	  	<div class="form-group col-md-6">
+	    	<label for="direccion-entrega">Direccion de entrega: </label>
+	    	<input type="text" class="form-control" id="direccionEntrega" name="direccionEntrega" #direccionEntrega="ngModel" [(ngModel)]="pedido.direccionEntrega" ngControl="name" placeholder="¿Donde desea entregar el pedido?">
+	 	</div>
+	 	<div class="form-group col-md-6">
+	    	<label for="direccion-cobro">Direccion de cobro: </label>
+	    	<input type="text" class="form-control" id="direccionCobro" name="direccionCobro" #direccionCobro="ngModel" [(ngModel)]="pedido.direccionCobro" ngControl="name" placeholder="¿Donde desea que se cobre su pedido?">
+	 	</div>
+	 	<div class="form-group col-md-4">
+	 			<label for="valor">Valor: </label>
+	 			<div class="input-group mb-3">
+  					<div class="input-group-prepend">
+    					<span class="input-group-text">$</span>
+  					</div>
+  					<input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" id="valor" name="valor" #valor="ngModel" [(ngModel)]="pedido.valor" ngControl="name">
+				</div>
+	 	</div>
+	 	<div class="form-group col-md-4">
+	 			<label for="valor-domicilio">Valor domicilio: </label>
+	 			<div class="input-group mb-4">
+	  				<div class="input-group-prepend">
+	    				<span class="input-group-text">$</span>
+	  				</div>
+	  				<input type="text" class="form-control" aria-label="Amount" id="valorDomicilio" name="valorDomicilio" #valorDomicilio="ngModel" [(ngModel)]="pedido.valorDomicilio" ngControl="name">
+				</div>
+	 	</div>
+	 	<div class="form-row">
+	 		<div class="form-group col-md-4">
+	 			<label for="fecha-entrega">Fecha de entrega: </label>
+	 			<input type="date" id="datepicker" class="form-control" name="fechaEntrega" #fechaEntrega="ngModel" [(ngModel)]="pedido.fechaEntrega" ngControl="name">
+	 		</div>
+	 		<div class="form-group col-md-4 bfh-timepicker">
+	 			<label for="hora">Hora de entrega: </label>
+	 			<input type="time" id="bfh-timepicker" class="form-control"  name="hora" #hora="ngModel" [(ngModel)]="pedido.hora" ngControl="name">
+	 		</div>
+	 		<div class="form-group col-md-4">
+	 			<label for="fecha-cobro">Fecha de cobro: </label>
+	 			<input type="date" id="datepicker" class="form-control" name="fechaCobro" #fechaCobro="ngModel" [(ngModel)]="pedido.fechaCobro" ngControl="name">
+	 		</div>
+	 	</div>
+	  	<div class="form-row">
+	    	<div class="form-group col-md-4">
+	     		<label for="telefono-entrega">Telefono de entrega:</label>
+	      		<input type="text" class="form-control" id="telefonoEntrega" name="telefonoEntrega" #telefonoEntrega="ngModel" [(ngModel)]="pedido.telefonoEntrega" ngControl="name" placeholder="Telefono donde se va entregar el pedido">
+	    	</div>
+	    	<div class="form-group col-md-4">
+	      		<label for="telefono-cobro">Telefono de cobro: </label>
+	      		<input type="text" class="form-control" id="telefonoCobro" name="telefonoCobro" #telefonoCobro="ngModel" [(ngModel)]="pedido.telefonoCobro" ngControl="name"  placeholder="telefono de la persona que se le cobra el pedido">
+	    	</div>
+	  	</div>
+	  	<div class="form-group col-md-8">
+	    	<label for="mensaje">Comentario: </label>
+	    	<textarea class="form-control" id="comentario" name="comentario" #comentario="ngModel" [(ngModel)]="pedido.comentario" ngControl="name" placeholder="Escribe un comentario"></textarea>
+	 	</div>
+	  	<div class="form-group form-check-inline">
+	    	<div class="form-check">
+	      		<input class="form-check-input" type="checkbox" id="gridCheck" name="pago" #pago="ngModel" [(ngModel)]="pedido.pago" ngControl="name">
+	      		<label class="form-check-label" for="gridCheck">
+	        		Pago
+	      		</label>
+	    	</div>
+	  	</div>
+	  	<div class="form-group form-check-inline">
+	    	<div class="form-check">
+	      		<input class="form-check-input" type="checkbox" id="gridCheck" name="entregado" #entregado="ngModel" [(ngModel)]="pedido.entregado" ngControl="name">
+	      		<label class="form-check-label" for="gridCheck">
+	        		Entregado
+	      		</label>
+	    	</div>
+	  	</div>
+	  	<div>
+	  		<button type="submit" name="guardar" class="btn btn-primary" (click)="newPedido()">Guardar</button>
+	  	</div>
+	</form>
+</div>

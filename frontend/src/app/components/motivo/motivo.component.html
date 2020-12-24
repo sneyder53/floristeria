@@ -1,0 +1,42 @@
+<div class="container col-12">
+	<div>
+		<h3>{{title}}</h3>
+		<hr>
+	</div>
+	<div class="col-12">
+		<table class="table">
+	  		<thead class="thead-dark">
+	    		<tr>
+	      			<th scope="col">#</th>
+	      			<th scope="col">Nombre</th>
+	      			<th scope="col">Descripcion</th>
+	      			<th scope="col">editar</th>
+	      			<th scope="col">borrar</th>
+	    		</tr>
+	  		</thead>
+	  		<tbody>
+	    		<tr *ngFor="let motivo of motivos">
+	      			<th scope="row">{{motivo.idmotivo}}</th>
+	      			<td>{{motivo.nombre}}</td>
+	      			<td>{{motivo.descripcion}}</td>
+	      			<td><button class="btn btn-warning" (click)="visibleform('editar', motivo.idmotivo)">Editar</button></td>
+	      			<td><button class="btn btn-danger" (click)="deletemotivo(motivo.idmotivo)">Borrar</button></td>
+	    		</tr>
+	    		<tr *ngIf="visible == 'editar'">
+	      			<th scope="row">{{motivo2.idmotivo}}</th>
+	      			<td><input class="form-control" type="text" name="nombre" placeholder="ingrese el nombre del motivo" [(ngModel)]="motivo2.nombre"></td>
+	      			<td><textarea class="form-control" name="descripcion" placeholder="ingrese la descripcion del motivo" [(ngModel)]="motivo2.descripcion"></textarea></td>
+	      			<td><button class="btn btn-primary" (click)="editarMotivo()">Guardar</button></td>
+	      			<td><button class="btn btn-warning" (click)="visibleform('null')">Cerrar</button></td>
+	    		</tr>
+	    		<tr>
+	      			<th scope="row">#</th>
+	      			<td><input class="form-control" type="text" name="nombre" placeholder="ingrese el nombre del motivo" [(ngModel)]="motivo.nombre"></td>
+	      			<td><textarea class="form-control" name="descripcion" placeholder="ingrese la descripcion del motivo" [(ngModel)]="motivo.descripcion"></textarea></td>
+	      			<td></td>
+	      			<td><button class="btn btn-success" (click)="crearMotivo()">Crear Motivo</button></td>
+	    		</tr>
+	  		</tbody> 
+		</table>
+	</div>
+</div>

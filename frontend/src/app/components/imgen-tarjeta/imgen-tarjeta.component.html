@@ -1,0 +1,80 @@
+<div class="container col-12">
+	<div>
+		<h3>{{ title }}</h3>
+		<hr>
+	</div>
+	<div class="col-12">
+		<table class="table">
+	  		<thead class="thead-dark">
+	    		<tr>
+	      			<th scope="col">#</th>
+	      			<th scope="col">Nombre</th>
+	      			<th scope="col">Descripcion</th>
+	      			<th scope="col">Imagen</th>
+	      			<th scope="col">Motivo</th>
+	      			<th scope="col">editar</th>
+	      			<th scope="col">borrar</th>
+	    		</tr>
+	  		</thead>
+	  		<tbody>
+	    		<tr *ngFor="let imagen of imagenes">
+	      			<th scope="row">{{imagen.idimagenTarjeta}}</th>
+	      			<td>{{imagen.nombre}}</td>
+	      			<td>{{imagen.descripcion}}</td>
+	      			<td><div class="imagen"><img src="{{url}}/uploads/tarjeta/{{imagen.url}}" class="img-thumbnail"></div></td>
+	      			<td>{{imagen.motivomotivo.nombre}}</td>
+	      			<td><button class="btn btn-warning" (click)="visibleform('editar', imagen.idimagenTarjeta)">Editar</button></td>
+	      			<td><button class="btn btn-danger" (click)="deleteImagenTarjeta(imagen.idimagenTarjeta)">Borrar</button></td>
+	    		</tr>
+	    		<tr *ngIf="visible == 'editar'">
+	      			<th scope="row">{{imagenTarjeta2.idimagenTarjeta}}</th>
+	      			<td><input class="form-control" type="text" name="nombre" [(ngModel)]="imagenTarjeta2.nombre"></td>
+	      			<td><textarea class="form-control" name="descripcion" placeholder="ingrese la descripcion" [(ngModel)]="imagenTarjeta2.descripcion"></textarea>
+	      			</td>
+	      			<td>
+	      				<div class="input-group mb-3">
+  							<div class="custom-file">
+    							<input type="file" class="custom-file-input" id="inputGroupFile02" (change)="fileChangeEvent($event)">
+    							<label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">{{imagenTarjeta2.url}}</label>
+  							</div>
+  							<div class="input-group-append">
+    							<span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+  							</div>
+						</div>
+					</td>
+	      			<td>
+	      				<select class="form-control" id="motivomotivo" #motivomotivo="ngModel" name="motivomotivo" [(ngModel)]="imagenTarjeta2.motivomotivo.idmotivo" ngControl="name" >
+      						<option *ngFor="let motivo of motivos" id="motivo.idmotivo" name="motivo.idmotivo" value="{{motivo.idmotivo}}">
+      							{{motivo.nombre}}
+      						</option>
+    					</select>
+    				</td>
+	      			<td><button class="btn btn-primary" (click)="editarImagenTarjeta()">Guardar</button></td>
+	      			<td><button class="btn btn-warning" (click)="visibleform('null')">Cerrar</button></td>
+	    		</tr>
+	    		<tr>
+	      			<th scope="row">#</th>
+	      			<td><input class="form-control" type="text" name="nombre" placeholder="ingrese el nombre de la imagen" [(ngModel)]="imagenTarjeta.nombre"></td>
+	      			<td><textarea class="form-control" name="descripcion" placeholder="ingrese la descripcion" [(ngModel)]="imagenTarjeta.descripcion"></textarea></td>
+	      			<td>
+	      				<div class="input-group mb-3">
+  							<div class="custom-file">
+    							<input type="file" class="custom-file-input" id="inputGroupFile02" (change)="fileChangeEvent($event)">
+    							<label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02"></label>
+  							</div>
+						</div>
+	      			</td>
+	      			<td>
+	      				<select class="form-control" id="motivomotivo" #motivomotivo="ngModel" name="motivomotivo" [(ngModel)]="imagenTarjeta.motivomotivo" ngControl="name" >
+      						<option *ngFor="let motivo of motivos" id="motivomotivo" name="motivomotivo" value="{{motivo.idmotivo}}">
+      							{{motivo.nombre}}
+      						</option>
+    					</select>
+    				</td>
+    				<td></td>
+	      			<td><button class="btn btn-success" (click)="crearImagenTarjeta()">Crear Imagen</button></td>
+	    		</tr>
+	  		</tbody>
+		</table>
+	</div>
+</div>

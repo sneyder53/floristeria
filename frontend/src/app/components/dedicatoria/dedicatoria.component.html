@@ -1,0 +1,58 @@
+<div class="container col-12">
+	<div>
+		<h3>{{ title }}</h3>
+		<hr>
+	</div>
+	<div class="col-12">
+		<table class="table">
+	  		<thead class="thead-dark">
+	    		<tr>
+	      			<th scope="col">#</th>
+	      			<th scope="col">Nombre</th>
+	      			<th scope="col">Dedicatoria</th>
+	      			<th scope="col">Motivo</th>
+	      			<th scope="col">editar</th>
+	      			<th scope="col">borrar</th>
+	    		</tr>
+	  		</thead>
+	  		<tbody>
+	    		<tr *ngFor="let dedicatoria of dedicatorias">
+	      			<th scope="row">{{dedicatoria.iddedicatoria}}</th>
+	      			<td>{{dedicatoria.nombre}}</td>
+	      			<td>{{dedicatoria.dedicatoria}}</td>
+	      			<td>{{dedicatoria.motivomotivo.nombre}}</td>
+	      			<td><button class="btn btn-warning" (click)="visibleform('editar', dedicatoria.iddedicatoria)">Editar</button></td>
+	      			<td><button class="btn btn-danger" (click)="deleteDedicatoria(dedicatoria.iddedicatoria)">Borrar</button></td>
+	    		</tr>
+	    		<tr *ngIf="visible == 'editar'">
+	      			<th scope="row">{{dedicatoria2.iddedicatoria}}</th>
+	      			<td><input class="form-control" type="text" name="nombre" [(ngModel)]="dedicatoria2.nombre"></td>
+	      			<td><textarea class="form-control" name="descripcion" placeholder="ingrese la dedicatoria" [(ngModel)]="dedicatoria2.dedicatoria"></textarea></td>
+	      			<td>
+	      				<select class="form-control" id="motivomotivo" #motivomotivo="ngModel" name="motivomotivo" [(ngModel)]="dedicatoria2.motivomotivo.idmotivo" ngControl="name" >
+      						<option *ngFor="let motivo of motivos" id="motivo.idmotivo" name="motivo.idmotivo" value="{{motivo.idmotivo}}">
+      							{{motivo.nombre}}
+      						</option>
+    					</select>
+    				</td>
+	      			<td><button class="btn btn-primary" (click)="editarDedicatoria()">Guardar</button></td>
+	      			<td><button class="btn btn-warning" (click)="visibleform('null')">Cerrar</button></td>
+	    		</tr>
+	    		<tr>
+	      			<th scope="row">#</th>
+	      			<td><input class="form-control" type="text" name="nombre" placeholder="ingrese el nombre de la dedicatoria" [(ngModel)]="dedicatoria.nombre"></td>
+	      			<td><textarea class="form-control" name="dedicatoria" placeholder="ingrese la dedicatoria" [(ngModel)]="dedicatoria.dedicatoria"></textarea></td>
+	      			<td>
+	      				<select class="form-control" id="motivomotivo" #motivomotivo="ngModel" name="motivomotivo" [(ngModel)]="dedicatoria.motivomotivo" ngControl="name" >
+      						<option *ngFor="let motivo of motivos" id="motivomotivo" name="motivomotivo" value="{{motivo.idmotivo}}">
+      							{{motivo.nombre}}
+      						</option>
+    					</select>
+    				</td>
+    				<td></td>
+	      			<td><button class="btn btn-success" (click)="crearDedicatoria()">Crear dedicatoria</button></td>
+	    		</tr>
+	  		</tbody> 
+		</table>
+	</div>
+</div>

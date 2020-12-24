@@ -1,0 +1,183 @@
+<div class="container col-12">
+	<div class="row">
+		<div class="col" *ngIf="pedidos">
+			<h4>Listado de pedidos del cliente: {{cliente.nombre}}</h4>
+			<div class="card" ng-repeat="pedido in pedidos | orderBy : !pedido.entregado" *ngFor="let pedido of pedidos">
+  				<div class="card-header" [ngClass]="{'text-white bg-danger': pedido.entregado && !pedido.pago, 'text-white bg-success': !pedido.entregado && pedido.pago, 'text-white bg-primary': pedido.pago && pedido.entregado, 'text-white bg-warning': !pedido.entregado && !pedido.pago }">
+    				Fecha de entrega: {{  (pedido.fechaEntrega.timestamp + 86400) * 1000 | date:'dd/MM/yyyy' }} Hora de entrega: {{pedido.hora.timestamp * 1000 | date: 'HH:mm'}}
+    				<button type="button" class="btn btn-outline-warning text-white" [ngClass]="{'disabled': pedido.pago}" (click)="setPagado(pedido.idpedido, true)">Pagado</button>
+            		<button type="button" class="btn btn-outline-warning text-white" [ngClass]="{'disabled': pedido.entregado}" (click)="setEntregado(pedido.idpedido, true)">Entregado</button>
+  				</div>
+  				<div class="card-body">
+    				<h5 class="card-title">Para: {{pedido.para}}</h5>
+    				<p class="card-text">De: {{pedido.de}}</p>
+    				<p class="card-text">Motivo: {{pedido.motivomotivo.nombre}}</p>
+    				<p class="card-text" *ngIf="pedido.pago">Pagado: El pedido esta pago</p>
+    				<p class="card-text" *ngIf="!pedido.pago">Pagado: El pedido no esta pago</p>
+    				<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="getPedido(pedido.idpedido)" >ver</button>
+    				<button type="button" class="btn btn-primary" (click)="imprimirRecibo(pedido.idpedido)">Imprimir Recibo</button>
+    				<button type="button" class="btn btn-primary" (click)="imprimirTarjeta(pedido.idpedido,pedido.motivomotivo.idmotivo)">Imprimir Tarjeta</button>
+  				</div>
+			</div>
+		</div>
+           <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" *ngFor="let pedido of pedidos">
+              <div class="modal-dialog modal-lg card">
+                <div class="modal-content">
+                  <div class="card-header text-white bg-info mb-3">
+                  	<button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  	<h5 class="card-title">Fecha y Hora de entrega: {{  (pedido2.fechaEntrega.timestamp + 86400) * 1000 | date:'dd/MM/yyyy' }} {{pedido2.hora.timestamp * 1000 | date: 'HH:mm'}} </h5>
+                  	<p class="card-title"> Nombre de Cliente: {{pedido2.clientecliente.nombre}} {{pedido2.clientecliente.apellidos}}</p>
+                  	</div>
+                  <div class="card-body">
+                    <h5 class="card-title"> para: {{pedido2.para}}</h5>
+                    <p class="card-text"> de: {{pedido2.de}}</p>
+                    <p class="card-text"> motivo: {{pedido2.motivomotivo.nombre}}</p>
+                    <p class="card-text"> Direccion de entrega: {{pedido2.direccionEntrega}}</p>
+                    <p class="card-text"> Valor del ramo: {{pedido2.valor}}</p>
+                    <p class="card-text"> Valor del domicilio: {{pedido2.valorDomicilio}}</p>
+                    <p class="card-text"> Telefono de entrega: {{pedido2.telefonoEntrega}}</p>
+                    <p class="card-text"> Fecha de Cobro: {{pedido2.fechaCobro.timestamp * 1000 | date:'dd/MM/yyyy' }}</p>
+                    <p class="card-text"> Direccion de Cobro: {{pedido2.direccionCobro}}</p>
+                    <p class="card-text"> Telefono de Cobro: {{pedido2.telefonoCobro}}</p>
+                    <p class="card-text"> Comentario: {{pedido2.comentario}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+		<div class="col">
+			<button class="btn btn-warning" (click)="creaPedido('crear')" *ngIf="!hrcliente || hrcliente == 'false'">Pedido nuevo</button>
+			<form #pedidoForm="ngForm" class="" *ngIf="hrcliente == 'crear'">
+				<div class="form-row">
+					<div class="form-group">
+    					<label for="exampleFormControlSelect1">Cleinte: </label>
+    					<input type="text" class="form-control" name="clientecliente" id="clientecliente" #clientecliente="ngModel" [(ngModel)]="pedido.clientecliente" ngControl="name" placeholder=" {{cliente.nombre}} {{cliente.apellidos}} " value="{{cliente.idcliente}}" disabled>
+  					</div>
+				</div>
+				<div class="form-row">
+	    			<div class="form-group col-md-4">
+	     				<label for="Para">Para:</label>
+	      				<input type="text" class="form-control" id="para" name="para" #para="ngModel" [(ngModel)]="pedido.para" ngControl="name" placeholder="¿Para quien es el pedido?">
+	    			</div>
+	    			<div class="form-group col-md-4">
+	      				<label for="de">De: </label>
+	      				<input type="text" class="form-control" id="de" name="de" #de="ngModel" [(ngModel)]="pedido.de" ngControl="name" placeholder="¿De quien es el pedido?">
+	    			</div>
+	  			</div>
+	  			<div class="form-group col-md-6">
+    				<label for="exampleFormControlSelect1">Motivo:</label>
+    				<select class="form-control show-tick" data-live-search="true" id="exampleFormControlSelect1" id="motivomotivo" #motivomotivo="ngModel" name="motivomotivo" [(ngModel)]="pedido.motivomotivo" ngControl="name">
+      					<option *ngFor="let motivo of motivos" id="motivo.idmotivo" name="motivo.idmotivo" value="{{motivo.idmotivo}}">
+      					{{motivo.nombre}}
+      				</option>
+    				</select>
+  				</div>
+	  			<div class="form-group col-md-8">
+	    			<label for="direccion-entrega">Direccion de entrega: </label>
+	    			<input type="text" class="form-control" id="direccionEntrega" name="direccionEntrega" #direccionEntrega="ngModel" [(ngModel)]="pedido.direccionEntrega" ngControl="name" placeholder="¿Donde desea entregar el pedido?">
+	 			</div>
+	 			<div class="form-group col-md-8">
+	    			<label for="direccion-cobro">Direccion de cobro: </label>
+	    			<input type="text" class="form-control" id="direccionCobro" name="direccionCobro" #direccionCobro="ngModel" [(ngModel)]="pedido.direccionCobro" ngControl="name" placeholder="¿Donde desea que se cobre su pedido?">
+	 			</div>
+	 			<div class="form-row">
+	 				<div class="form-group col-md-4">
+	 					<label for="valor">Valor: </label>
+	 					<div class="input-group mb-3">
+	  						<div class="input-group-prepend">
+	    						<span class="input-group-text">$</span>
+	  						</div>
+	  						<input type="text" class="form-control" aria-label="Amount" id="valor" name="valor" #valor="ngModel" [(ngModel)]="pedido.valor" ngControl="name" value=" ">
+						</div>
+	 				</div>
+	 				<div class="form-group col-md-4">
+	 					<label for="valor-domicilio">Valor domicilio: </label>
+	 					<div class="input-group mb-3">
+	  						<div class="input-group-prepend">
+	    						<span class="input-group-text">$</span>
+	  						</div>
+	  						<input type="text" class="form-control" aria-label="Amount" id="valorDomicilio" name="valorDomicilio" #valorDomicilio="ngModel" [(ngModel)]="pedido.valorDomicilio" ngControl="name">
+						</div>
+	 				</div>
+	 			</div>
+	 			<div class="form-row">
+	 				<div class="form-group col-md-4">
+	 					<label for="fecha-entrega">Fecha de entrega: </label>
+	 					<input type="date" id="datepicker" class="form-control" name="fechaEntrega" #fechaEntrega="ngModel" [(ngModel)]="pedido.fechaEntrega" ngControl="name">
+	 				</div>
+	 				<div class="form-group col-md-3 bfh-timepicker">
+	 					<label for="hora">Hora de entrega: </label>
+	 					<input type="time" id="bfh-timepicker" class="form-control" name="hora" #hora="ngModel" [(ngModel)]="pedido.hora" ngControl="name">
+	 				</div>
+	 				<div class="form-group col-md-4">
+	 					<label for="fecha-cobro">Fecha de cobro: </label>
+	 					<input type="date" id="datepicker" class="form-control" name="fechaCobro" #fechaCobro="ngModel" [(ngModel)]="pedido.fechaCobro" ngControl="name">
+	 				</div>
+	 			</div>
+	  			<div class="form-row">
+	    			<div class="form-group col-md-4">
+	     				<label for="telefono-entrega">Telefono de entrega:</label>
+	      				<input type="text" class="form-control" id="telefonoEntrega" name="telefonoEntrega" #telefonoEntrega="ngModel" [(ngModel)]="pedido.telefonoEntrega" ngControl="name" placeholder="Telefono donde se va entregar el pedido">
+	    			</div>
+	    			<div class="form-group col-md-4">
+	      				<label for="telefono-cobro">Telefono de cobro: </label>
+	      				<input type="text" class="form-control" id="telefonoCobro" name="telefonoCobro" #telefonoCobro="ngModel" [(ngModel)]="pedido.telefonoCobro" ngControl="name"  placeholder="telefono de la persona que se le cobra el pedido">
+	    			</div>
+	  			</div>
+	 			<div class="form-group col-md-12">
+	    			<label for="mensaje">Comentario: </label>
+	    			<textarea class="form-control" id="comentario" name="comentario" #comentario="ngModel" [(ngModel)]="pedido.comentario" ngControl="name" placeholder="Escribe un comentario"></textarea>
+	 			</div>
+	  			<div class="form-group form-check-inline">
+	    			<div class="form-check">
+	      				<input class="form-check-input" type="checkbox" id="gridCheck" name="pago" #pago="ngModel" [(ngModel)]="pedido.pago" ngControl="name">
+	      				<label class="form-check-label" for="gridCheck">
+	        				Pago
+	      				</label>
+	    			</div>
+	  			</div>
+	  			<div class="form-group form-check-inline">
+	    			<div class="form-check">
+	      				<input class="form-check-input" type="checkbox" id="gridCheck" name="entregado" #entregado="ngModel" [(ngModel)]="pedido.entregado" ngControl="name">
+	      				<label class="form-check-label" for="gridCheck">
+	        				Entregado
+	      				</label>
+	    			</div>
+	  			</div>
+	  			<div class="form-row">
+	  				<div class="form-group col-md-2">
+	  					<button type="submit" name="guardar" class="btn btn-primary" (click)="newPedido()">Guardar</button>
+	  				</div>
+	  				<div class="form-group col-md-2">
+	  					<button type="submit" class="btn btn-warning" (click)="creaPedido('false')">Cerrar</button>
+	  				</div>
+	  			</div>
+			</form>
+
+			<div class="clearfix"></div>
+
+			
+		</div>
+	</div>
+	<div class="clearfix"></div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+    	<a class="page-link" [routerLink]="['/cliente/pedido', idcliente ,pagePrev]" aria-label="Previous">
+    		<span aria-hidden="true">&laquo;</span>
+    		<span class="sr-only">Previous</span>
+    	</a>
+	</li>
+	<li *ngFor="let page of pages" class="page-item">
+		<a class="page-link" [routerLink]="['/cliente/pedido', idcliente , page + 1]">{{page + 1}}</a>
+	</li>
+    <li class="page-item">
+    	<a class="page-link" [routerLink]="['/cliente/pedido', idcliente , pageNext]" aria-label="Next">
+    		<span aria-hidden="true">&raquo;</span>
+        	<span class="sr-only">Next</span>
+    	</a>
+    </li>
+  </ul>
+</nav>
+</div>

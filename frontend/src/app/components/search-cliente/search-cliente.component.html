@@ -1,0 +1,139 @@
+<div class="container col-12">
+	<div class="clearfix"></div>
+	<div class="navbar-right" id="navbarTogglerDemo02">
+    	<form class="form-inline my-2 my-lg-0 pull-right">
+    		<h3 class="">{{titulo}} </h3>
+     		<input class="form-control mr-sm-2" type="search" name="searchString" [(ngModel)]="searchString" placeholder="Buscar">
+      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="searchRute()">Buscar</button>
+    	</form>
+  </div>
+    <hr>
+	<div class="row">
+		<div class="col" *ngIf="clientes">
+			<h4>Listado de Clientes</h4>
+			<div class="card" *ngFor="let cliente of clientes">
+  				<div class="card-header">
+    				{{cliente.nombre}} {{cliente.apellidos}}
+  				</div>
+  				<div class="card-body">
+    				<h5 class="card-title">Cedula: {{cliente.numCliente}}</h5>
+    				<p class="card-text">Telefono: {{cliente.telefono}}</p>
+    				<p class="card-text">Celular: {{cliente.celular}}</p>
+    				<p class="card-text">Email: {{cliente.email}}</p>
+    				<a class="btn btn-primary" (click)="clientePedido(cliente.idcliente)">hacer pedido</a>
+    				<a class="btn btn-secondary" (click)="getCliente(cliente.idcliente,'edit')">Editar</a>
+  				</div>
+			</div>
+		</div>
+		<div class="col">
+			<button class="btn btn-warning" (click)="creaCliente('crear')" *ngIf="!hrcliente || hrcliente == 'false'">Crear cliente</button>
+			<form #clienteForm="ngForm" class="" *ngIf="hrcliente == 'crear'">
+				<div class="form-group row">
+					<h4>Crear Cliente</h4>
+				</div>
+				<div class="form-group row">
+	    			<label for="cedula" class="col-sm-2 col-form-label">Cedula: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="cedula" #cedula="ngModel" name="cedula" [(ngModel)]="cliente.numCliente" ngControl="name" placeholder="Ingrese un nuemro de cedula">
+	    			</div>
+	  			</div>
+				<div class="form-group row">
+	    			<label for="nombre" class="col-sm-2 col-form-label">Nombre: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="nombre" #nombre="ngModel" name="nombre" [(ngModel)]="cliente.nombre" ngControl="name" placeholder="Ingres un nombre">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="apellidos" class="col-sm-2 col-form-label">Apellidos: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="apellidos" #apellidos="ngModel" name="apellidos" [(ngModel)]="cliente.apellidos"  placeholder="Apellidos">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="correo" class="col-sm-2 col-form-label">Correo Electronico: </label>
+	    			<div class="col-sm-5">
+	      				<input type="email" class="form-control" id="email" #email="ngModel" name="email" [(ngModel)]="cliente.email"  placeholder="Correo Electronico">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="telefono" class="col-sm-2 col-form-label">Telefono fijo: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="telefono" #telefono="ngModel" name="telefono" [(ngModel)]="cliente.telefono"  placeholder="Telefono fijo">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="celular" class="col-sm-2 col-form-label">Numero de celular: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="celular" #celular="ngModel" name="celular" [(ngModel)]="cliente.celular"  placeholder="celular">
+	    			</div>
+	  			</div>
+	  			<button type="submit" class="btn btn-primary mb-2" (click)="newCliente()">Guardar</button>
+	  			<button type="submit" class="btn btn-warning" (click)="creaCliente('false')">Cerrar</button>
+			</form>
+			<div class="clearfix"></div>
+			<form #clienteEditForm="ngForm" class="" *ngIf="hrcliente == 'edit'">
+				<div class="form-group row">
+					<h4>Editar Cliente</h4>
+				</div>
+				<div class="form-group row">
+	    			<label for="cedula" class="col-sm-2 col-form-label">Cedula: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="cedula" #cedula="ngModel" name="cedula" [(ngModel)]="cliente2.numCliente" ngControl="name" placeholder="Ingrese un nuemro de cedula">
+	    			</div>
+	  			</div>
+				<div class="form-group row">
+	    			<label for="nombre" class="col-sm-2 col-form-label">Nombre: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="nombre" #nombre="ngModel" name="nombre" [(ngModel)]="cliente2.nombre" ngControl="name" placeholder="Ingres un nombre">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="apellidos" class="col-sm-2 col-form-label">Apellidos: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="apellidos" #apellidos="ngModel" name="apellidos" [(ngModel)]="cliente2.apellidos"  placeholder="Apellidos">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="email" class="col-sm-2 col-form-label">Correo Electronico: </label>
+	    			<div class="col-sm-5">
+	      				<input type="email" class="form-control" id="email" #email="ngModel" name="email" [(ngModel)]="cliente2.email"  placeholder="Correo Electronico">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="telefono" class="col-sm-2 col-form-label">Telefono fijo: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="telefono" #telefono="ngModel" name="telefono" [(ngModel)]="cliente2.telefono"  placeholder="Telefono fijo">
+	    			</div>
+	  			</div>
+	  			<div class="form-group row">
+	    			<label for="celular" class="col-sm-2 col-form-label">Numero de celular: </label>
+	    			<div class="col-sm-5">
+	      				<input type="text" class="form-control" id="celular" #celular="ngModel" name="celular" [(ngModel)]="cliente2.celular"  placeholder="celular">
+	    			</div>
+	  			</div>
+	  			<button type="submit" class="btn btn-primary mb-2" (click)="editarCliente(cliente2.idcliente,'false')">Guardar</button>
+	  			<button type="submit" class="btn btn-warning" (click)="creaCliente('false')">Cerrar</button>
+			</form>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+    	<a class="page-link" [routerLink]="['/cliente', pagePrev]" aria-label="Previous">
+    		<span aria-hidden="true">&laquo;</span>
+    		<span class="sr-only">Previous</span>
+    	</a>
+	</li>
+	<li *ngFor="let page of pages" class="page-item">
+		<a class="page-link" [routerLink]="['/cliente', page + 1]">{{page + 1}}</a>
+	</li>
+    <li class="page-item">
+    	<a class="page-link" [routerLink]="['/cliente', pageNext]" aria-label="Next">
+    		<span aria-hidden="true">&raquo;</span>
+        	<span class="sr-only">Next</span>
+    	</a>
+    </li>
+  </ul>
+</nav>
+</div>
